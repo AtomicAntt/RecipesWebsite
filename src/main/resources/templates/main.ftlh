@@ -29,6 +29,11 @@
             <li class="nav-item">
                 <a class="nav-link" href="about">About Us</a>
             </li>
+            <#if isAdmin?? && isAdmin>
+                <li class="nav-item">
+                    <a class="nav-link text-info" href="controlpanel">Control Panel</a>
+                </li>
+            </#if>
         </ul>
             <form class="form-inline my-2 my-lg-0 ml-auto" method="post">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search Recipes" aria-label="Search">

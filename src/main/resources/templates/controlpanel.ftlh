@@ -42,19 +42,7 @@
     </div>
 </div>
 
-<#if error??>
-    <p style="color: red;">${error}</p>
-</#if>
-
-<form method="post">
-    <label for="username">User:</label>
-    <input type="text" id="username" name="username">
-    <br>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password">
-    <br>
-    <input type="submit" value="Submit">
-</form>
+<h1>This is the control panel!</h1>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
