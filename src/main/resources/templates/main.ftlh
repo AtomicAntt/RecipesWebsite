@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>HomePage</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 </head>
 <body>
 <div class="navbar navbar-expand-lg navbar-light bg-light">
@@ -57,7 +58,18 @@
 <p><a href="#">[item2]</a> added: 6/6/2024</p>
 
 <h1>Announcements</h1>
-<p>text</p>
+<ul class="list-group">
+    <#list announcements as announcement>
+        <li class="list-group-item"><pre>${announcement.announcement}</pre> Time Written: ${announcement.timeWritten.toString()}
+            <#if isAdmin?? && isAdmin>
+                <form action="/deleteAnnouncement" method="post">
+                    <input type="hidden" name="id" id="id" value="${announcement.id}">
+                    <input type="submit" class="btn btn-danger" value="Delete">
+                </form>
+            </#if>
+        </li>
+    </#list>
+</ul>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
