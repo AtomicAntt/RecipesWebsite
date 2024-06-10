@@ -1,8 +1,11 @@
 package com.example.recipeswebsite;
 
 import com.example.recipeswebsite.Model.Announcement;
+import com.example.recipeswebsite.Model.Tag;
 import com.example.recipeswebsite.Model.User;
 import com.example.recipeswebsite.Repositories.AnnouncementRepository;
+import com.example.recipeswebsite.Repositories.RecipeRepository;
+import com.example.recipeswebsite.Repositories.TagRepository;
 import com.example.recipeswebsite.Repositories.UserRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,12 +19,16 @@ import java.time.LocalDateTime;
 public class IndexController {
     private final UserRepository userRepository;
     private final AnnouncementRepository announcementRepository;
+    private final TagRepository tagRepository;
+    private final RecipeRepository recipeRepository;
 
     final private UserService userService;
 
-    public IndexController(UserRepository userRepository, AnnouncementRepository announcementRepository, UserService userService) {
+    public IndexController(UserRepository userRepository, AnnouncementRepository announcementRepository, TagRepository tagRepository, RecipeRepository recipeRepository, UserService userService) {
         this.userRepository = userRepository;
         this.announcementRepository = announcementRepository;
+        this.tagRepository = tagRepository;
+        this.recipeRepository = recipeRepository;
         this.userService = userService;
     }
 
@@ -61,6 +68,7 @@ public class IndexController {
         if (user != null){
             if (user.isAdmin()){
                 model.addAttribute("isAdmin", user.isAdmin());
+                model.addAttribute("tags", tagRepository.findAll());
                 return "controlpanel";
             }
         }
@@ -131,6 +139,30 @@ public class IndexController {
             }
         }
         return "redirect:/"; // replace with error page later
+    }
+
+    @PostMapping("/addTag")
+    public String addTag(Tag tag, @CookieValue(value="username", defaultValue="n/a") String username, @CookieValue(value="password", defaultValue="n/a") String password){
+        User user = userService.authenticateUser(username, password);
+        if (user != null){
+            if (user.isAdmin()){
+                tagRepository.save(tag);
+                return "redirect:controlpanel";
+            }
+        }
+        return "redirect:controlpanel"; // replace with error page later
+    }
+
+    @PostMapping("/deleteTag")
+    public String deleteTag(Integer tagId, @CookieValue(value="username", defaultValue="n/a") String username, @CookieValue(value="password", defaultValue="n/a") String password){
+        User user = userService.authenticateUser(username, password);
+        if (user != null){
+            if (user.isAdmin()){
+                tagRepository.deleteById(tagId);
+                return "redirect:controlpanel";
+            }
+        }
+        return "redirect:controlpanel";
     }
 
 }

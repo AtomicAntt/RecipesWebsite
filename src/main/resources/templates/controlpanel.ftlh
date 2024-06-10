@@ -42,20 +42,111 @@
     </div>
 </div>
 
-<h1>This is the control panel!</h1>
+<h2>Add Announcements Here</h2>
 
 <form action="/announce" method="post">
     <label for="announcement">
         Post Announcement
     </label>
     <textarea class="form-control" id="announcement" name="announcement"></textarea>
-    <input type="submit" value="Post">
+    <input type="submit" value="Post Announcement">
 </form>
+<br>
+
+<h2>Create Recipe Tags Here</h2>
+<p>Note: This means adding a new tag that recipes can add, not adding a new one to a recipe.</p>
+
+<form action="/addTag" method="post">
+    <label for="tagName">
+        New Tag Name
+    </label>
+    <input type="text" id="tagName" name="tagName" class="form-control">
+    <input type="submit" value="Add Tag">
+</form>
+<br>
+
+<h2>Delete Recipe Tags Here</h2>
+
+<ul>
+    <#list tags as tag>
+        <li>
+            <form action="/deleteTag" method="post">
+                <label for="tagName">
+                    ${tag.tagName}
+                </label>
+                <input type="hidden" name="tagId" value="${tag.id}">
+                <input type="submit" value="Delete Tag">
+            </form>
+
+        </li>
+    </#list>
+</ul>
+
+<h2>Add Recipes Here</h2>
+
+<form action="/addRecipe" method="post">
+    <label for="recipeTitle">
+        Recipe Title
+    </label>
+    <input type="text" id="recipeTitle" name="recipeTitle" class="form-control">
+
+    <label for="recipeIngredients">
+        Recipe Ingredients. These will be put onto a list automatically, make a new line for each ingredient!
+    </label>
+    <textarea class="form-control" id="recipeIngredients" name="recipeIngredients"></textarea>
+
+    <label for="recipeEntry">
+        Recipe Instructions
+    </label>
+    <textarea class="form-control" id="recipeEntry" name="recipeEntry"></textarea>
+    <div id="result"></div>
+
+    Recipe Tags/Categories
+    <br>
+    <ul>
+        <#list tags as tag>
+            <li>
+                <input class="form-check-input" type="checkbox" name="tagId" id="${tag.id}" value="${tag.id}"> ${tag.tagName} <br>
+            </li>
+
+        </#list>
+    </ul>
+
+    <input type="submit" value="Post Recipe">
+</form>
+
+
 
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<script>
+    $("#recipeEntry").on('keyup', function(e) {
+        let input = $(e.target).val();
+        input = input.replace(/[\n]{2}/g, '</p><p>');
+        input = input.replace(/[\n]{1}/g, '<br/>');
+        input = input.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+        input = input.replace(/\*(.+?)\*/g, '<em>$1</em>');
+        $('#result').html('<div style="white-space: pre-wrap">' + input + '</div>');
+    });
+
+    $("#recipeEntry").on('keydown', function(e) {
+        if (e.key === 'Tab') {
+            e.preventDefault();
+            const start = this.selectionStart;
+            const end = this.selectionEnd;
+
+            // Set textarea value to: text before caret + tab + text after caret
+            $(this).val($(this).val().substring(0, start) + "\t" + $(this).val().substring(end));
+
+            // Put caret at right position again
+            this.selectionStart = this.selectionEnd = start + 1;
+
+        }
+    });
+</script>
 </body>
 </html>
