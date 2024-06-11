@@ -124,14 +124,14 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 <script>
-    $("#recipeEntry").on('keyup', function(e) {
-        let input = $(e.target).val();
-        input = input.replace(/[\n]{2}/g, '</p><p>');
-        input = input.replace(/[\n]{1}/g, '<br/>');
-        input = input.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-        input = input.replace(/\*(.+?)\*/g, '<em>$1</em>');
-        $('#result').html('<div style="white-space: pre-wrap">' + input + '</div>');
-    });
+    // $("#recipeEntry").on('keyup', function(e) {
+    //     let input = $(e.target).val();
+    //     input = input.replace(/[\n]{2}/g, '</p><p>');
+    //     input = input.replace(/[\n]{1}/g, '<br/>');
+    //     input = input.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    //     input = input.replace(/\*(.+?)\*/g, '<em>$1</em>');
+    //     $('#result').html('<div style="white-space: pre-wrap">' + input + '</div>');
+    // });
 
     $("#recipeEntry").on('keydown', function(e) {
         if (e.key === 'Tab') {
@@ -144,7 +144,6 @@
 
             // Put caret at right position again
             this.selectionStart = this.selectionEnd = start + 1;
-
         }
     });
 </script>

@@ -60,7 +60,7 @@
 <h1>Announcements</h1>
 <ul class="list-group">
     <#list announcements as announcement>
-        <li class="list-group-item"><pre>${announcement.announcement}</pre> Time Written: ${announcement.timeWritten.toString()}
+        <li class="list-group-item"><div style="white-space: pre-wrap">${announcement.announcement}</div> Time Written: ${announcement.timeWritten.toString()}
             <#if isAdmin?? && isAdmin>
                 <form action="/deleteAnnouncement" method="post">
                     <input type="hidden" name="id" id="id" value="${announcement.id}">
