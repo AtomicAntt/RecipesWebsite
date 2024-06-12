@@ -91,7 +91,7 @@
     <input type="text" id="recipeTitle" name="recipeTitle" class="form-control">
 
     <label for="recipeIngredients">
-        Recipe Ingredients. These will be put onto a list automatically, make a new line for each ingredient!
+        Recipe Ingredients
     </label>
     <textarea class="form-control" id="recipeIngredients" name="recipeIngredients"></textarea>
 
@@ -133,7 +133,7 @@
     //     $('#result').html('<div style="white-space: pre-wrap">' + input + '</div>');
     // });
 
-    $("#recipeEntry").on('keydown', function(e) {
+    $("#recipeEntry, #recipeIngredients, #announcement").on('keydown', function(e) {
         if (e.key === 'Tab') {
             e.preventDefault();
             const start = this.selectionStart;
