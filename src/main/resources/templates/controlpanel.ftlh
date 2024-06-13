@@ -85,6 +85,10 @@
 <h2>Add Recipes Here</h2>
 
 <form action="/addRecipe" method="post">
+    <label for="image">Recipe Image:</label>
+    <input type="file" id="image" name="image" required>
+    <br>
+
     <label for="recipeTitle">
         Recipe Title
     </label>

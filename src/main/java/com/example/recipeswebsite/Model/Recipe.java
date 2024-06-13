@@ -21,6 +21,9 @@ public class Recipe {
     @ManyToMany(mappedBy = "recipes")
     private List<Tag> tags;
 
+    @Lob
+    private byte[] image;
+
     public Integer getId() {
         return id;
     }
@@ -59,5 +62,13 @@ public class Recipe {
 
     public void setTags(List<Tag> tags) {
         this.tags = tags;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }
