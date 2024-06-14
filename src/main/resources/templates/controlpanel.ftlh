@@ -84,7 +84,7 @@
 
 <h2>Add Recipes Here</h2>
 
-<form action="/addRecipe" method="post">
+<form action="/addRecipe" method="post" enctype="multipart/form-data">
     <label for="image">Recipe Image:</label>
     <input type="file" id="image" name="image" required>
     <br>

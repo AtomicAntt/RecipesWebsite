@@ -22,6 +22,7 @@ public class Recipe {
     private List<Tag> tags;
 
     @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
     private byte[] image;
 
     public Integer getId() {

@@ -17,6 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
 
 @Controller
 public class IndexController {
@@ -80,7 +83,13 @@ public class IndexController {
 
     @GetMapping("/recipe/{id}")
     public String recipe(@PathVariable Integer id, Model model){
-        model.addAttribute("recipe", recipeRepository.findById(id).orElse(null));
+        Recipe recipe = recipeRepository.findById(id).orElse(null);
+
+        String base64Image = Base64.getEncoder().encodeToString(recipe.getImage());
+
+        model.addAttribute("image", base64Image);
+        model.addAttribute("recipe", recipe);
+
         return "recipe";
     }
 
@@ -175,10 +184,23 @@ public class IndexController {
     }
 
     @PostMapping("/addRecipe")
-    public String addRecipe(Recipe recipe, @RequestParam("image") MultipartFile image, @CookieValue(value="username", defaultValue="n/a") String username, @CookieValue(value="password", defaultValue="n/a") String password){
+    public String addRecipe(@RequestParam("recipeTitle") String recipeTitle, @RequestParam("recipeIngredients") String recipeIngredients, @RequestParam("recipeEntry") String recipeEntry, @RequestParam("tagId") List<Integer> tagIds, @RequestParam("image") MultipartFile image, @CookieValue(value="username", defaultValue="n/a") String username, @CookieValue(value="password", defaultValue="n/a") String password){
         User user = userService.authenticateUser(username, password);
         if (user != null){
             if (user.isAdmin()){
+                Recipe recipe = new Recipe();
+                recipe.setRecipeTitle(recipeTitle);
+                recipe.setRecipeIngredients(recipeIngredients);
+                recipe.setRecipeEntry(recipeEntry);
+
+                List<Tag> tagsList = new ArrayList<>();
+
+                for (Integer tagId : tagIds) {
+                    Tag tag = tagRepository.findById(tagId).orElse(null);
+                    tagsList.add(tag);
+                }
+
+                recipe.setTags(tagsList);
 
                 try {
                     recipe.setImage(image.getBytes());
