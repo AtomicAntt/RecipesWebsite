@@ -86,7 +86,7 @@
 
 <form action="/addRecipe" method="post" enctype="multipart/form-data">
     <label for="image">Recipe Image:</label>
-    <input type="file" id="image" name="image" required>
+    <input type="file" id="image" name="image" accept="image/png" required>
     <br>
 
     <label for="recipeTitle">
@@ -110,7 +110,7 @@
     <ul>
         <#list tags as tag>
             <li>
-                <input class="form-check-input" type="checkbox" name="tagId" id="${tag.id}" value="${tag.id}"> ${tag.tagName} <br>
+                <input class="form-check-input" type="checkbox" name="tagIds" id="tag_${tag.id}" value="${tag.id}"> ${tag.tagName} <br>
             </li>
 
         </#list>

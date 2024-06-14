@@ -184,7 +184,7 @@ public class IndexController {
     }
 
     @PostMapping("/addRecipe")
-    public String addRecipe(@RequestParam("recipeTitle") String recipeTitle, @RequestParam("recipeIngredients") String recipeIngredients, @RequestParam("recipeEntry") String recipeEntry, @RequestParam("tagId") List<Integer> tagIds, @RequestParam("image") MultipartFile image, @CookieValue(value="username", defaultValue="n/a") String username, @CookieValue(value="password", defaultValue="n/a") String password){
+    public String addRecipe(@RequestParam("recipeTitle") String recipeTitle, @RequestParam("recipeIngredients") String recipeIngredients, @RequestParam("recipeEntry") String recipeEntry, @RequestParam("tagIds") List<Integer> tagIds, @RequestParam("image") MultipartFile image, @CookieValue(value="username", defaultValue="n/a") String username, @CookieValue(value="password", defaultValue="n/a") String password){
         User user = userService.authenticateUser(username, password);
         if (user != null){
             if (user.isAdmin()){

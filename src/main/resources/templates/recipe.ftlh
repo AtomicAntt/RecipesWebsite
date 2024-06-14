@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Recipe</title>
+    <title>${recipe.recipeTitle}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 </head>
@@ -43,12 +43,21 @@
     </div>
 </div>
 
-<img src="data:image/png;base64,${image}" alt="Recipe Image for ${recipe.recipeTitle}">
 <h1>${recipe.recipeTitle}</h1>
+<img src="data:image/png;base64,${image}" alt="Recipe Image for ${recipe.recipeTitle}">
+<br>
 <h2> Recipe Ingredients </h2>
 <div style="white-space: pre-wrap">${recipe.recipeIngredients}</div>
+<br>
 <h2> Instructions </h2>
 <div style="white-space: pre-wrap">${recipe.recipeEntry}</div>
+<br>
+<h2> Tags</h2>
+<ul>
+    <#list recipe.tags as tag>
+        <li>${tag.tagName}</li>
+    </#list>
+</ul>
 
 
 
