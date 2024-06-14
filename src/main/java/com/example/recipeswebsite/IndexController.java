@@ -1,6 +1,7 @@
 package com.example.recipeswebsite;
 
 import com.example.recipeswebsite.Model.Announcement;
+import com.example.recipeswebsite.Model.Recipe;
 import com.example.recipeswebsite.Model.Tag;
 import com.example.recipeswebsite.Model.User;
 import com.example.recipeswebsite.Repositories.AnnouncementRepository;
@@ -12,7 +13,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 @Controller
@@ -73,6 +76,12 @@ public class IndexController {
             }
         }
         return "main"; // replace with error page later
+    }
+
+    @GetMapping("/recipe/{id}")
+    public String recipe(@PathVariable Integer id, Model model){
+        model.addAttribute("recipe", recipeRepository.findById(id).orElse(null));
+        return "recipe";
     }
 
     @PostMapping("/login")
@@ -159,6 +168,25 @@ public class IndexController {
         if (user != null){
             if (user.isAdmin()){
                 tagRepository.deleteById(tagId);
+                return "redirect:controlpanel";
+            }
+        }
+        return "redirect:controlpanel";
+    }
+
+    @PostMapping("/addRecipe")
+    public String addRecipe(Recipe recipe, @RequestParam("image") MultipartFile image, @CookieValue(value="username", defaultValue="n/a") String username, @CookieValue(value="password", defaultValue="n/a") String password){
+        User user = userService.authenticateUser(username, password);
+        if (user != null){
+            if (user.isAdmin()){
+
+                try {
+                    recipe.setImage(image.getBytes());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                recipeRepository.save(recipe);
                 return "redirect:controlpanel";
             }
         }
