@@ -110,7 +110,7 @@
     <ul>
         <#list tags as tag>
             <li>
-                <input class="form-check-input" type="checkbox" name="tagIds" id="tag_${tag.id}" value="${tag.id}"> ${tag.tagName} <br>
+                <input class="form-check-input" type="checkbox" name="tagIds" id="tag_${tag.id}" value="${tag.id}">${tag.tagName}<br>
             </li>
 
         </#list>

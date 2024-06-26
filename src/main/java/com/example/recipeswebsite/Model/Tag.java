@@ -14,7 +14,7 @@ public class Tag {
 
     private String tagName;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "tags")
     private List<Recipe> recipes;
 
     public Integer getId() {

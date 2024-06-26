@@ -20,7 +20,7 @@ public class Recipe {
     @Column(columnDefinition="Text")
     private String recipeEntry;
 
-    @ManyToMany(mappedBy = "recipes")
+    @ManyToMany
     private List<Tag> tags;
 
     @Lob
