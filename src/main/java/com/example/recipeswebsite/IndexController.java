@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -81,9 +82,15 @@ public class IndexController {
         return "main"; // replace with error page later
     }
 
-    @GetMapping("/recipe/{id}")
-    public String recipe(@PathVariable Integer id, Model model){
-        Recipe recipe = recipeRepository.findById(id).orElse(null);
+    @GetMapping("/recipe/{title}")
+    public String recipe(@PathVariable String title, Model model){
+        String formattedTitle = title.replace("-", " ").toLowerCase(); // Typed title is with dashes
+
+        Recipe recipe = recipeRepository.findByRecipeTitle(formattedTitle);
+
+        if (recipe == null){
+            return "main"; // replace with error later
+        }
 
         String base64Image = Base64.getEncoder().encodeToString(recipe.getImage());
 
@@ -210,7 +217,8 @@ public class IndexController {
                 }
 
                 recipeRepository.save(recipe);
-                return "redirect:controlpanel";
+
+                return "redirect:recipe/"+recipe.getRecipeTitle().replace(" ", "-").toLowerCase();
             }
         }
         return "redirect:controlpanel";
