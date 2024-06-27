@@ -192,6 +192,7 @@ public class IndexController {
                 recipe.setRecipeTitle(recipeTitle);
                 recipe.setRecipeIngredients(recipeIngredients);
                 recipe.setRecipeEntry(recipeEntry);
+                recipe.setTimeWritten(LocalDateTime.now());
 
                 List<Tag> tagsList = new ArrayList<>();
 

@@ -58,6 +58,8 @@
         <li>${tag.tagName}</li>
     </#list>
 </ul>
+<h2>Time Written</h2>
+<p>${recipe.timeWritten}</p>
 
 
 

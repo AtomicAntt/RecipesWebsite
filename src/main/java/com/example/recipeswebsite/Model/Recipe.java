@@ -2,6 +2,7 @@ package com.example.recipeswebsite.Model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,6 +27,8 @@ public class Recipe {
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
     private byte[] image;
+
+    private LocalDateTime timeWritten;
 
     public Integer getId() {
         return id;
@@ -73,5 +76,13 @@ public class Recipe {
 
     public void setImage(byte[] image) {
         this.image = image;
+    }
+
+    public LocalDateTime getTimeWritten() {
+        return timeWritten;
+    }
+
+    public void setTimeWritten(LocalDateTime timeWritten) {
+        this.timeWritten = timeWritten;
     }
 }
