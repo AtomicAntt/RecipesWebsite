@@ -83,7 +83,12 @@ public class IndexController {
     }
 
     @GetMapping("/recipe/{title}")
-    public String recipe(@PathVariable String title, Model model){
+    public String recipe(@PathVariable String title, Model model, @CookieValue(value="username", defaultValue="n/a") String username, @CookieValue(value="password", defaultValue="n/a") String password){
+        User user = userService.authenticateUser(username, password);
+        if (user != null){
+            model.addAttribute("isAdmin", user.isAdmin());
+        }
+        
         String formattedTitle = title.replace("-", " ").toLowerCase(); // Typed title is with dashes
 
         Recipe recipe = recipeRepository.findByRecipeTitle(formattedTitle);
