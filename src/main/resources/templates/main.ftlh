@@ -54,8 +54,14 @@
 <p><a href="#">[item]</a></p>
 
 <h1>New Recipe ChangeLog</h1>
-<p><a href="#">[item1]</a> added: 6/6/2024</p>
-<p><a href="#">[item2]</a> added: 6/6/2024</p>
+<ul class="list-group">
+    <#list recipes as recipe>
+        <li class="list-group-item">
+            <h2><a href="/recipe/${recipe.recipeTitle?replace(' ', '-')?lower_case}">${recipe.recipeTitle}</a></h2>
+            <p>Time Written: ${recipe.timeWritten}</p>
+        </li>
+    </#list>
+</ul>
 
 <h1>Announcements</h1>
 <ul class="list-group">

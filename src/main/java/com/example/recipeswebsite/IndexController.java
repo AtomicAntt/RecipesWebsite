@@ -47,6 +47,7 @@ public class IndexController {
         }
 
         model.addAttribute("announcements", announcementRepository.findAll());
+        model.addAttribute("recipes", recipeRepository.findAll());
 
         return "main";
     }
@@ -88,7 +89,7 @@ public class IndexController {
         if (user != null){
             model.addAttribute("isAdmin", user.isAdmin());
         }
-        
+
         String formattedTitle = title.replace("-", " ").toLowerCase(); // Typed title is with dashes
 
         Recipe recipe = recipeRepository.findByRecipeTitle(formattedTitle);
